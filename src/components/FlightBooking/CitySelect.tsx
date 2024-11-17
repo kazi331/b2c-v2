@@ -1,4 +1,10 @@
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 const CITIES = [
   { value: "DAC", label: "Dhaka (DAC)", country: "Bangladesh" },
@@ -15,18 +21,68 @@ interface CitySelectProps {
   excludeCity?: string;
 }
 
-export function CitySelect({ value, onChange, placeholder, excludeCity }: CitySelectProps) {
+const airports = [
+  {
+    code: "ZYZ",
+    name: "Berchem Railway Stn.",
+    city: "Antwerp",
+    state: "Flanders",
+    country: "Belgium",
+  },
+  {
+    code: "ZYR",
+    name: "Brussels Midi Railway Station",
+    city: "Brussels",
+    state: "Vlaams Brabant",
+    country: "Belgium",
+  },
+  {
+    code: "ZYL",
+    name: "Osmany Intl",
+    city: "Sylhet",
+    state: "Sylhet",
+    country: "Bangladesh",
+  },
+  {
+    code: "ZYI",
+    name: "Zunyi",
+    city: "Zunyi",
+    state: "Guizhou",
+    country: "China",
+  },
+];
+
+export function CitySelect({
+  value,
+  onChange,
+  placeholder,
+  excludeCity,
+}: CitySelectProps) {
   return (
     <Select value={value} onValueChange={onChange}>
-      <SelectTrigger className="w-full">
-        <SelectValue placeholder={placeholder} />
+      <SelectTrigger className="w-full h-14 max-w-60">
+        <SelectValue placeholder={placeholder} className="p-10" />
       </SelectTrigger>
-      <SelectContent>
-        {CITIES.filter(city => city.value !== excludeCity).map((city) => (
+      <SelectContent className=" max-w-60">
+        {/* {CITIES.filter((city) => city.value !== excludeCity).map((city) => (
           <SelectItem key={city.value} value={city.value}>
             <div className="flex flex-col">
               <span className="font-medium">{city.label}</span>
-              <span className="text-sm text-muted-foreground">{city.country}</span>
+              <span className="text-sm text-muted-foreground">
+                {city.country}
+              </span>
+            </div>
+          </SelectItem>
+        ))} */}
+        {airports.map((airport, index) => (
+          <SelectItem key={airport.code} value={airport.code}>
+            <div className="flex flex-col items-start">
+              <span className="font-bold">
+                {airport.city}, {airport.country}
+              </span>
+              <span className="text-sm text-muted-foreground max-w-52 truncate">
+                {airport.code}, {airport.name}
+              </span>
             </div>
           </SelectItem>
         ))}

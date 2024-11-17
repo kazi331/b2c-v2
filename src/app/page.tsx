@@ -29,8 +29,8 @@ export default function Page() {
   const dayAfterTomorrow = addDays(today, 2);
 
   const [tripType, setTripType] = useState("roundTrip");
-  const [origin, setOrigin] = useState("DAC");
-  const [destination, setDestination] = useState("CXB");
+  const [origin, setOrigin] = useState("ZYZ");
+  const [destination, setDestination] = useState("ZYI");
   const [dateRange, setDateRange] = useState<DateRange>({
     from: tomorrow,
     to: dayAfterTomorrow,
@@ -40,7 +40,7 @@ export default function Page() {
   const [date, setDate] = useState<DateRange | undefined>({
     from: new Date(2022, 0, 20),
     to: addDays(new Date(2022, 0, 20), 20),
-  })
+  });
 
   const [travelers, setTravelers] = useState<Travelers>({
     adults: 1,
@@ -50,8 +50,8 @@ export default function Page() {
   const [cabinClass, setCabinClass] = useState("Economy");
   const [multiCityFlights, setMultiCityFlights] = useState<Flight[]>([
     {
-      origin: "DAC",
-      destination: "CXB",
+      origin: "ZYZ",
+      destination: "ZYI",
       date: tomorrow,
     },
   ]);
@@ -113,7 +113,7 @@ export default function Page() {
           <div className="flex flex-col sm:flex-row gap-4">
             <div className="flex-1">
               <TripTypeSelector value={tripType} onChange={setTripType} />
-                          </div>
+            </div>
             <div className="sm:w-72">
               <TravelersClassSelect
                 travelers={travelers}

@@ -1,23 +1,27 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { addDays, format } from "date-fns"
-import { CalendarIcon } from "lucide-react"
-import { DateRange } from "react-day-picker"
+import * as React from "react";
+import { addDays, format } from "date-fns";
+import { CalendarIcon } from "lucide-react";
+import { DateRange } from "react-day-picker";
 
-import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
-import { Calendar } from "@/components/ui/calendar"
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import { Calendar } from "@/components/ui/calendar";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/components/ui/popover"
+} from "@/components/ui/popover";
 
 export function DatePickerWithRange({
   className,
-  dateRange, setDateRange
-}: React.HTMLAttributes<HTMLDivElement> & { dateRange: DateRange, setDateRange: (date: DateRange) => void }) {
+  dateRange,
+  setDateRange,
+}: React.HTMLAttributes<HTMLDivElement> & {
+  dateRange: DateRange;
+  setDateRange: (date: DateRange) => void;
+}) {
   // const [date, setDate] = React.useState<DateRange | undefined>({
   //   from: new Date(2022, 0, 20),
   //   to: addDays(new Date(2022, 0, 20), 20),
@@ -31,7 +35,7 @@ export function DatePickerWithRange({
             id="date"
             variant={"outline"}
             className={cn(
-              "w-[300px] justify-start text-left font-normal",
+              "w-[300px] justify-start text-left font-normal h-14",
               !dateRange && "text-muted-foreground"
             )}
           >
@@ -62,5 +66,5 @@ export function DatePickerWithRange({
         </PopoverContent>
       </Popover>
     </div>
-  )
+  );
 }

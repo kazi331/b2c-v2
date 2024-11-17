@@ -23,7 +23,7 @@ export function DatePicker({ date, onChange, label, minDate }: DatePickerProps) 
         <Button
           variant={"outline"}
           className={cn(
-            "w-full justify-start text-left font-normal",
+            "w-full justify-start text-left font-normal h-14",
             !date && "text-muted-foreground"
           )}
         >
