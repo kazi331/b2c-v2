@@ -30,30 +30,43 @@ export function DatePickerWithRange({
   return (
     <div className={cn("grid gap-2", className)}>
       <Popover>
-        <PopoverTrigger asChild>
-          <Button
-            id="date"
-            variant={"outline"}
-            className={cn(
-              "w-[300px] justify-start text-left font-normal h-14",
-              !dateRange && "text-muted-foreground"
-            )}
-          >
-            <CalendarIcon />
-            {dateRange?.from ? (
-              dateRange.to ? (
-                <>
-                  {format(dateRange.from, "LLL dd, y")} -{" "}
-                  {format(dateRange.to, "LLL dd, y")}
-                </>
-              ) : (
+        <div className="flex gap-2">
+          <PopoverTrigger asChild>
+            <Button
+              id="departure-date"
+              variant={"outline"}
+              className={cn(
+                "w-[150px] justify-start text-left font-normal h-14",
+                !dateRange?.from && "text-muted-foreground"
+              )}
+            >
+              <CalendarIcon />
+              {dateRange?.from ? (
                 format(dateRange.from, "LLL dd, y")
-              )
-            ) : (
-              <span>Pick a date</span>
-            )}
-          </Button>
-        </PopoverTrigger>
+              ) : (
+                <span>Pick a departure date</span>
+              )}
+            </Button>
+          </PopoverTrigger>
+          <PopoverTrigger asChild >
+            <Button
+              id="arrival-date"
+              variant={"outline"}
+              className={cn(
+                "w-[150px] justify-start text-left font-normal h-14",
+                !dateRange?.to && "text-muted-foreground"
+              )}
+            >
+              <CalendarIcon />
+              {dateRange?.to ? (
+                format(dateRange.to, "LLL dd, y")
+              ) : (
+                <span>Pick an arrival date</span>
+              )}
+            </Button>
+          </PopoverTrigger>
+        </div>
+
         <PopoverContent className="w-auto p-0" align="start">
           <Calendar
             initialFocus

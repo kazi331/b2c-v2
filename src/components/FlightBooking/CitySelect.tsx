@@ -59,34 +59,36 @@ export function CitySelect({
   excludeCity,
 }: CitySelectProps) {
   return (
-    <Select value={value} onValueChange={onChange}>
-      <SelectTrigger className="w-full h-14 max-w-60">
-        <SelectValue placeholder={placeholder} className="p-10" />
-      </SelectTrigger>
-      <SelectContent className=" max-w-60">
-        {/* {CITIES.filter((city) => city.value !== excludeCity).map((city) => (
-          <SelectItem key={city.value} value={city.value}>
-            <div className="flex flex-col">
-              <span className="font-medium">{city.label}</span>
-              <span className="text-sm text-muted-foreground">
-                {city.country}
-              </span>
-            </div>
-          </SelectItem>
-        ))} */}
-        {airports.map((airport, index) => (
-          <SelectItem key={airport.code} value={airport.code}>
-            <div className="flex flex-col items-start">
-              <span className="font-bold">
-                {airport.city}, {airport.country}
-              </span>
-              <span className="text-sm text-muted-foreground max-w-52 truncate">
-                {airport.code}, {airport.name}
-              </span>
-            </div>
-          </SelectItem>
-        ))}
-      </SelectContent>
-    </Select>
+    <div className="w-full">
+      <Select value={value} onValueChange={onChange}>
+        <SelectTrigger className="w-full h-14 max-w-60">
+          <SelectValue placeholder={placeholder} className="p-10" />
+        </SelectTrigger>
+        <SelectContent className=" max-w-60">
+          {/* {CITIES.filter((city) => city.value !== excludeCity).map((city) => (
+            <SelectItem key={city.value} value={city.value}>
+              <div className="flex flex-col">
+                <span className="font-medium">{city.label}</span>
+                <span className="text-sm text-muted-foreground">
+                  {city.country}
+                </span>
+              </div>
+            </SelectItem>
+          ))} */}
+          {airports.map((airport, index) => (
+            <SelectItem key={airport.code} value={airport.code}>
+              <div className="flex flex-col items-start">
+                <span className="font-bold">
+                  {airport.city}, {airport.country}
+                </span>
+                <span className="text-sm text-muted-foreground max-w-52 truncate">
+                  {airport.code}, {airport.name}
+                </span>
+              </div>
+            </SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
+    </div>
   );
 }

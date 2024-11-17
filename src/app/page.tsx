@@ -126,26 +126,32 @@ export default function Page() {
 
           {tripType !== "multiCity" ? (
             <div className="grid grid-cols-[1fr,auto,1fr,1fr] gap-4 items-start">
-              <CitySelect
-                value={origin}
-                onChange={setOrigin}
-                placeholder="From"
-                excludeCity={destination}
-              />
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={handleSwapCities}
-                className="mt-1"
-              >
-                <ArrowLeftRight className="h-4 w-4" />
-              </Button>
-              <CitySelect
-                value={destination}
-                onChange={setDestination}
-                placeholder="To"
-                excludeCity={origin}
-              />
+              <div className="flex items-center w-full relative gap-2">
+                <div className="w-1/2">
+                  <CitySelect
+                    value={origin}
+                    onChange={setOrigin}
+                    placeholder="From"
+                    excludeCity={destination}
+                  />
+                </div>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={handleSwapCities}
+                  className="flex items-center bg-slate-200 text-slate-600 rounded-full border-2 border-white justify-center absolute left-1/2 top-1/2 -translate-y-1/2 -translate-x-1/2"
+                >
+                  <ArrowLeftRight className="h-4 w-4" />
+                </Button>
+                <div className="w-1/2">
+                  <CitySelect
+                    value={destination}
+                    onChange={setDestination}
+                    placeholder="To"
+                    excludeCity={origin}
+                  />
+                </div>
+              </div>
               {tripType === "roundTrip" ? (
                 <DatePickerWithRange
                   // date={dateRange}
