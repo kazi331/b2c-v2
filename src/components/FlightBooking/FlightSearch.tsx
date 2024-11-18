@@ -126,12 +126,14 @@ export function FlightBooking() {
                 onChange={setOrigin}
                 placeholder="From"
                 excludeCity={destination}
+                label="Origin"
               />
               <CitySelect
                 value={destination}
                 onChange={setDestination}
                 placeholder="To"
                 excludeCity={origin}
+                label="Destination"
               />
             </div>
             <Button

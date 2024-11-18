@@ -34,7 +34,7 @@ export function MultiCityTrip({
               }
               placeholder="From"
               excludeCity={flight.destination}
-              className=""
+              label="Origin"
             />
             <CitySelect
               value={flight.destination}
@@ -43,7 +43,7 @@ export function MultiCityTrip({
               }
               placeholder="To"
               excludeCity={flight.origin}
-              className=""
+              label="Destination"
             />
 
             <DatePicker

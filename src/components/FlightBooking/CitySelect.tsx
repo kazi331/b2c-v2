@@ -21,6 +21,7 @@ interface CitySelectProps {
   placeholder: string;
   excludeCity?: string;
   className?: string;
+  label?: string;
 }
 
 const airports = [
@@ -60,11 +61,22 @@ export function CitySelect({
   placeholder,
   excludeCity,
   className,
+  label,
 }: CitySelectProps) {
   return (
     <Select value={value} onValueChange={onChange}>
-      <SelectTrigger className={cn("w-full h-14 max-w-60 bg-gray-100 focus:ring-0", className)}>
+      <SelectTrigger
+        className={cn(
+          "w-full h-14 max-w-60 bg-gray-100 focus:ring-0 relative rounded-tl-none",
+          className
+        )}
+      >
         <SelectValue placeholder={placeholder} className="p-10" />
+        {label && (
+          <p className="absolute bottom-full left-0 ring-1 ring-gray-200 bg-gray-100 px-2 rounded-t text-muted-foreground">
+            {label}
+          </p>
+        )}
       </SelectTrigger>
       <SelectContent className=" max-w-60">
         {airports
