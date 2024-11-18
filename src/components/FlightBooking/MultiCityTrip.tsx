@@ -26,7 +26,7 @@ export function MultiCityTrip({
     <div className="space-y-4">
       {flights.map((flight, index) => (
         <div key={index} className="flex items-center">
-          <div className="flex gap-2 flex-1 me-2">
+          <div className="flex gap-2 flex-1">
             <CitySelect
               value={flight.origin}
               onChange={(value) =>
@@ -53,20 +53,22 @@ export function MultiCityTrip({
             />
           </div>
           {flights.length > 1 && (
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={() => onRemoveFlight(index)}
-            >
-              <Trash2 className="h-4 w-4" />
-            </Button>
+            <div className="ml-2">
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => onRemoveFlight(index)}
+              >
+                <Trash2 className="h-4 w-4" />
+              </Button>
+            </div>
           )}
         </div>
       ))}
       <Button
         variant="outline"
         onClick={onAddFlight}
-        className="w-full"
+        className={`${flights.length >= 5 ? "hidden"  : "flex"}`}
         disabled={flights.length >= 5}
       >
         <Plus className="mr-2 h-4 w-4" />

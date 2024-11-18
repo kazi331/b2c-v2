@@ -1,192 +1,66 @@
 "use client";
-import { CitySelect } from "@/components/FlightBooking/CitySelect";
-import { DatePicker } from "@/components/FlightBooking/DatePicker";
-import { DatePickerWithRange } from "@/components/FlightBooking/DatePickerRange";
-import { MultiCityTrip } from "@/components/FlightBooking/MultiCityTrip";
-import { TravelersClassSelect } from "@/components/FlightBooking/TravelersClassSelect";
-import { TripTypeSelector } from "@/components/FlightBooking/TripTypeSelector";
-import { Button } from "@/components/ui/button";
-import { addDays } from "date-fns";
-import { ArrowLeftRight, Search } from "lucide-react";
+
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useState } from "react";
-import { DateRange } from "react-day-picker";
-
-interface Flight {
-  origin: string;
-  destination: string;
-  date: Date | undefined;
-}
-
-interface Travelers {
-  adults: number;
-  children: number;
-  infants: number;
-}
+// import { FlightBooking } from "@/components/FlightBooking/FlightBooking"
+import { FlightBooking } from "@/components/FlightBooking/FlightSearch";
+import {
+  Building2,
+  CreditCard,
+  TreePalmIcon as PalmTree,
+  Plane,
+} from "lucide-react";
 
 export default function Page() {
-  const today = new Date();
-  const tomorrow = addDays(today, 1);
-  const dayAfterTomorrow = addDays(today, 2);
-
-  const [tripType, setTripType] = useState("roundTrip");
-  const [origin, setOrigin] = useState("ZYZ");
-  const [destination, setDestination] = useState("ZYI");
-  const [dateRange, setDateRange] = useState<DateRange>({
-    from: tomorrow,
-    to: dayAfterTomorrow,
-  });
-  const [departureDate, setDepartureDate] = useState<Date>(tomorrow);
-
-/*   const [date, setDate] = useState<DateRange | undefined>({
-    from: new Date(2022, 0, 20),
-    to: addDays(new Date(2022, 0, 20), 20),
-  }); */
-
-  const [travelers, setTravelers] = useState<Travelers>({
-    adults: 1,
-    children: 0,
-    infants: 0,
-  });
-  const [cabinClass, setCabinClass] = useState("Economy");
-  const [multiCityFlights, setMultiCityFlights] = useState<Flight[]>([
-    {
-      origin: "ZYZ",
-      destination: "ZYI",
-      date: tomorrow,
-    },
-  ]);
-
-  const handleSwapCities = () => {
-    setOrigin(destination);
-    setDestination(origin);
-  };
-
-  const handleMultiCityFlightChange = (index: number, flight: Flight) => {
-    const newFlights = [...multiCityFlights];
-    newFlights[index] = flight;
-    setMultiCityFlights(newFlights);
-  };
-
-  const handleAddFlight = () => {
-    if (multiCityFlights.length < 5) {
-      const lastFlight = multiCityFlights[multiCityFlights.length - 1];
-      const newDate = lastFlight.date ? addDays(lastFlight.date, 1) : tomorrow;
-
-      setMultiCityFlights([
-        ...multiCityFlights,
-        {
-          origin: lastFlight.destination || "",
-          destination: "",
-          date: newDate,
-        },
-      ]);
-    }
-  };
-
-  const handleRemoveFlight = (index: number) => {
-    const newFlights = multiCityFlights.filter((_, i) => i !== index);
-    setMultiCityFlights(newFlights);
-  };
-
-  const handleSearch = () => {
-    const searchData = {
-      tripType,
-      travelers,
-      cabinClass,
-      ...(tripType !== "multiCity"
-        ? {
-            origin,
-            destination,
-            ...(tripType === "roundTrip" ? { dateRange } : { departureDate }),
-          }
-        : {
-            flights: multiCityFlights,
-          }),
-    };
-    console.log("Search data:", searchData);
-  };
+  const [activeTab, setActiveTab] = useState("flight");
 
   return (
-    <div className="min-h-screen bg-gray-100 p-8">
-      <div className="max-w-4xl mx-auto bg-white p-4 pb-10 rounded-lg relative shadow">
-        <div className="space-y-6 ">
-          <div className="flex flex-col sm:flex-row gap-4">
-            <div className="flex-1">
-              <TripTypeSelector value={tripType} onChange={setTripType} />
-            </div>
-            <div className="sm:w-72">
-              <TravelersClassSelect
-                travelers={travelers}
-                onTravelersChange={setTravelers}
-                cabinClass={cabinClass}
-                onCabinClassChange={setCabinClass}
-              />
-            </div>
-          </div>
-
-          {tripType !== "multiCity" ? (
-            <div className="grid gap-4 grid-cols-2">
-              <div className="relative gap-2">
-                <div className="grid grid-flow-col grid-cols-2 gap-2 w-full">
-                  <CitySelect
-                    value={origin}
-                    onChange={setOrigin}
-                    placeholder="From"
-                    excludeCity={destination}
-                  />
-                  <CitySelect
-                    value={destination}
-                    onChange={setDestination}
-                    placeholder="To"
-                    excludeCity={origin}
-                  />
-                </div>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  onClick={handleSwapCities}
-                  className="flex items-center bg-brand text-white hover:bg-brand hover:text-white rounded-full border-4 border-white justify-center absolute left-1/2 top-1/2 -translate-y-1/2 -translate-x-1/2"
-                >
-                  <ArrowLeftRight className="h-4 w-4" />
-                </Button>
-              </div>
-
-              {tripType === "roundTrip" ? (
-                <DatePickerWithRange
-                  // date={dateRange}
-                  // onChange={(range) =>
-                  //   setDateRange(range as unknown as DateRange)
-                  // }
-                  // label="Select dates"
-                  // minDate={today}
-                  // isRange
-                  dateRange={dateRange}
-                  setDateRange={setDateRange}
-                />
-              ) : (
-                <DatePicker
-                  date={departureDate}
-                  onChange={(date) => setDepartureDate(date as Date)}
-                  label="Departure Date"
-                    minDate={today}
-                    
-                />
-              )}
-            </div>
-          ) : (
-            <MultiCityTrip
-              flights={multiCityFlights}
-              onFlightChange={handleMultiCityFlightChange}
-              onAddFlight={handleAddFlight}
-              onRemoveFlight={handleRemoveFlight}
-            />
-          )}
-
-          <Button onClick={handleSearch} className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 bg-brand text-white hover:bg-brand hover:text-white">
-            <Search className="mr-2 h-4 w-4" />
-            Search Flights
-          </Button>
-        </div>
+    <div className="min-h-screen bg-gray-100 pt-20">
+      <div className="max-w-4xl mx-auto bg-white p-4 pb-10 pt-14 rounded-lg shadow relative">
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+          <TabsList className="grid w-1/2 grid-cols-4 p-1 bg-white absolute top-0 left-1/2 -translate-y-1/2 -translate-x-1/2 px-10 shadow h-min">
+            <TabsTrigger
+              value="flight"
+              className="flex items-center gap-1 py-3 rounded-none !shadow-none border-b-2 data-[state=active]:border-b-2 data-[state=active]:border-brand"
+            >
+              <Plane className="h-4 w-4" />
+              Flight
+            </TabsTrigger>
+            <TabsTrigger
+              value="hotel"
+              className="flex items-center gap-1 py-3 rounded-none !shadow-none border-b-2 data-[state=active]:border-b-2 data-[state=active]:border-brand"
+            >
+              <Building2 className="h-4 w-4" />
+              Hotel
+            </TabsTrigger>
+            <TabsTrigger
+              value="tour"
+              className="flex items-center gap-1 py-3 rounded-none !shadow-none border-b-2 data-[state=active]:border-b-2 data-[state=active]:border-brand"
+            >
+              <PalmTree className="h-4 w-4" />
+              Tour
+            </TabsTrigger>
+            <TabsTrigger
+              value="visa"
+              className="flex items-center gap-1 py-3 rounded-none !shadow-none border-b-2 data-[state=active]:border-b-2 data-[state=active]:border-brand"
+            >
+              <CreditCard className="h-4 w-4" />
+              Visa
+            </TabsTrigger>
+          </TabsList>
+          <TabsContent value="flight">
+            <FlightBooking />
+          </TabsContent>
+          <TabsContent value="hotel">
+            <div className="p-4 text-center">Hotel booking coming soon</div>
+          </TabsContent>
+          <TabsContent value="tour">
+            <div className="p-4 text-center">Tour booking coming soon</div>
+          </TabsContent>
+          <TabsContent value="visa">
+            <div className="p-4 text-center">Visa services coming soon</div>
+          </TabsContent>
+        </Tabs>
       </div>
     </div>
   );
