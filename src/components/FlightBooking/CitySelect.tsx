@@ -5,20 +5,22 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { cn } from "@/lib/utils";
 
-const CITIES = [
+/* const CITIES = [
   { value: "DAC", label: "Dhaka (DAC)", country: "Bangladesh" },
   { value: "CXB", label: "Cox's Bazar (CXB)", country: "Bangladesh" },
   { value: "CGP", label: "Chittagong (CGP)", country: "Bangladesh" },
   { value: "ZYL", label: "Sylhet (ZYL)", country: "Bangladesh" },
   { value: "JSR", label: "Jessore (JSR)", country: "Bangladesh" },
-];
+]; */
 
 interface CitySelectProps {
   value: string;
   onChange: (value: string) => void;
   placeholder: string;
   excludeCity?: string;
+  className?: string;
 }
 
 const airports = [
@@ -57,25 +59,17 @@ export function CitySelect({
   onChange,
   placeholder,
   excludeCity,
+  className,
 }: CitySelectProps) {
   return (
-    <div className="w-full">
-      <Select value={value} onValueChange={onChange}>
-        <SelectTrigger className="w-full h-14 max-w-60">
-          <SelectValue placeholder={placeholder} className="p-10" />
-        </SelectTrigger>
-        <SelectContent className=" max-w-60">
-          {/* {CITIES.filter((city) => city.value !== excludeCity).map((city) => (
-            <SelectItem key={city.value} value={city.value}>
-              <div className="flex flex-col">
-                <span className="font-medium">{city.label}</span>
-                <span className="text-sm text-muted-foreground">
-                  {city.country}
-                </span>
-              </div>
-            </SelectItem>
-          ))} */}
-          {airports.map((airport, index) => (
+    <Select value={value} onValueChange={onChange}>
+      <SelectTrigger className={cn("w-full h-14 max-w-60 bg-gray-100 focus:ring-0", className)}>
+        <SelectValue placeholder={placeholder} className="p-10" />
+      </SelectTrigger>
+      <SelectContent className=" max-w-60">
+        {airports
+          .filter((airport) => airport.city !== excludeCity)
+          .map((airport) => (
             <SelectItem key={airport.code} value={airport.code}>
               <div className="flex flex-col items-start">
                 <span className="font-bold">
@@ -87,8 +81,7 @@ export function CitySelect({
               </div>
             </SelectItem>
           ))}
-        </SelectContent>
-      </Select>
-    </div>
+      </SelectContent>
+    </Select>
   );
 }

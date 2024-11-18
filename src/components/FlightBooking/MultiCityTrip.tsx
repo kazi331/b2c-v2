@@ -1,5 +1,5 @@
-import { Plus, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Plus, Trash2 } from "lucide-react";
 import { CitySelect } from "./CitySelect";
 import { DatePicker } from "./DatePicker";
 
@@ -25,8 +25,8 @@ export function MultiCityTrip({
   return (
     <div className="space-y-4">
       {flights.map((flight, index) => (
-        <div key={index} className="flex gap-4 items-start">
-          <div className="grid grid-cols-3 gap-4 flex-1">
+        <div key={index} className="flex items-center">
+          <div className="flex gap-2 flex-1 me-2">
             <CitySelect
               value={flight.origin}
               onChange={(value) =>
@@ -34,6 +34,7 @@ export function MultiCityTrip({
               }
               placeholder="From"
               excludeCity={flight.destination}
+              className=""
             />
             <CitySelect
               value={flight.destination}
@@ -42,12 +43,12 @@ export function MultiCityTrip({
               }
               placeholder="To"
               excludeCity={flight.origin}
+              className=""
             />
+
             <DatePicker
               date={flight.date}
-              onChange={(date) =>
-                onFlightChange(index, { ...flight, date })
-              }
+              onChange={(date) => onFlightChange(index, { ...flight, date })}
               label="Select date"
             />
           </div>

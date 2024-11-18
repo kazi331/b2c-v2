@@ -37,10 +37,10 @@ export default function Page() {
   });
   const [departureDate, setDepartureDate] = useState<Date>(tomorrow);
 
-  const [date, setDate] = useState<DateRange | undefined>({
+/*   const [date, setDate] = useState<DateRange | undefined>({
     from: new Date(2022, 0, 20),
     to: addDays(new Date(2022, 0, 20), 20),
-  });
+  }); */
 
   const [travelers, setTravelers] = useState<Travelers>({
     adults: 1,
@@ -108,8 +108,8 @@ export default function Page() {
 
   return (
     <div className="min-h-screen bg-gray-100 p-8">
-      <div className="max-w-4xl mx-auto bg-white p-4 rounded-lg">
-        <div className="space-y-6">
+      <div className="max-w-4xl mx-auto bg-white p-4 pb-10 rounded-lg relative shadow">
+        <div className="space-y-6 ">
           <div className="flex flex-col sm:flex-row gap-4">
             <div className="flex-1">
               <TripTypeSelector value={tripType} onChange={setTripType} />
@@ -125,25 +125,15 @@ export default function Page() {
           </div>
 
           {tripType !== "multiCity" ? (
-            <div className="grid grid-cols-[1fr,auto,1fr,1fr] gap-4 items-start">
-              <div className="flex items-center w-full relative gap-2">
-                <div className="w-1/2">
+            <div className="grid gap-4 grid-cols-2">
+              <div className="relative gap-2">
+                <div className="grid grid-flow-col grid-cols-2 gap-2 w-full">
                   <CitySelect
                     value={origin}
                     onChange={setOrigin}
                     placeholder="From"
                     excludeCity={destination}
                   />
-                </div>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  onClick={handleSwapCities}
-                  className="flex items-center bg-slate-200 text-slate-600 rounded-full border-2 border-white justify-center absolute left-1/2 top-1/2 -translate-y-1/2 -translate-x-1/2"
-                >
-                  <ArrowLeftRight className="h-4 w-4" />
-                </Button>
-                <div className="w-1/2">
                   <CitySelect
                     value={destination}
                     onChange={setDestination}
@@ -151,7 +141,16 @@ export default function Page() {
                     excludeCity={origin}
                   />
                 </div>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={handleSwapCities}
+                  className="flex items-center bg-brand text-white hover:bg-brand hover:text-white rounded-full border-4 border-white justify-center absolute left-1/2 top-1/2 -translate-y-1/2 -translate-x-1/2"
+                >
+                  <ArrowLeftRight className="h-4 w-4" />
+                </Button>
               </div>
+
               {tripType === "roundTrip" ? (
                 <DatePickerWithRange
                   // date={dateRange}
@@ -169,7 +168,8 @@ export default function Page() {
                   date={departureDate}
                   onChange={(date) => setDepartureDate(date as Date)}
                   label="Departure Date"
-                  minDate={today}
+                    minDate={today}
+                    
                 />
               )}
             </div>
@@ -182,7 +182,7 @@ export default function Page() {
             />
           )}
 
-          <Button onClick={handleSearch} className="w-full">
+          <Button onClick={handleSearch} className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 bg-brand text-white hover:bg-brand hover:text-white">
             <Search className="mr-2 h-4 w-4" />
             Search Flights
           </Button>

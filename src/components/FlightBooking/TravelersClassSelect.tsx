@@ -1,14 +1,12 @@
-import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Users } from "lucide-react";
+import { Label } from "@/components/ui/label";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { Label } from "@/components/ui/label";
-import { cn } from "@/lib/utils";
+import { Users } from "lucide-react";
+import { useState } from "react";
 
 interface Travelers {
   adults: number;
@@ -40,7 +38,8 @@ export function TravelersClassSelect({
     onTravelersChange(newTravelers);
   };
 
-  const totalTravelers = travelers.adults + travelers.children + travelers.infants;
+  const totalTravelers =
+    travelers.adults + travelers.children + travelers.infants;
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -92,24 +91,46 @@ export function TravelersClassSelect({
 
           <div className="space-y-2">
             <h4 className="font-medium leading-none">Class</h4>
-            <RadioGroup
-              value={cabinClass}
-              onValueChange={onCabinClassChange}
-              className="grid grid-cols-2 gap-2"
-            >
+            <div className="grid grid-cols-2 gap-2">
               <div className="flex items-center space-x-2">
-                <RadioGroupItem value="Economy" id="economy" />
-                <Label htmlFor="economy">Economy</Label>
+                <input
+                  type="radio"
+                  id="economy"
+                  name="cabinClass"
+                  value="Economy"
+                  checked={cabinClass === "Economy"}
+                  onChange={() => onCabinClassChange("Economy")}
+                  className="h-4 w-4 text-brand border-gray-300 focus:ring-brand "
+                />
+                <Label
+                  htmlFor="economy"
+                  className="p-2 transition-colors duration-200 text-gray-700 cursor-pointer"
+                >
+                  Economy
+                </Label>
               </div>
               <div className="flex items-center space-x-2">
-                <RadioGroupItem value="Business" id="business" />
-                <Label htmlFor="business">Business</Label>
+                <input
+                  type="radio"
+                  id="business"
+                  name="cabinClass"
+                  value="Business"
+                  checked={cabinClass === "Business"}
+                  onChange={() => onCabinClassChange("Business")}
+                  className="h-4 w-4 text-brand border-gray-300 focus:ring-brand"
+                />
+                <Label
+                  htmlFor="business"
+                  className="p-2 transition-colors duration-200 text-gray-700 cursor-pointer"
+                >
+                  Business
+                </Label>
               </div>
-            </RadioGroup>
+            </div>
           </div>
 
           <Button
-            className="w-full"
+            className="w-full bg-brand text-white hover:bg-brand hover:text-white"
             onClick={() => setOpen(false)}
           >
             Done
