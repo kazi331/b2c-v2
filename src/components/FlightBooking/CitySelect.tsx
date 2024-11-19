@@ -68,7 +68,7 @@ export function CitySelect({
     <Select value={value} onValueChange={onChange}>
       <SelectTrigger
         className={cn(
-          "w-full h-18 max-w-60 bg-gray-100 focus:ring-0 relative rounded-tl-none truncate",
+          "w-full h-24 max-w- bg-gray-100 focus:ring-0 relative truncate border-none",
           className
         )}
       >
@@ -77,7 +77,7 @@ export function CitySelect({
           <SelectValue placeholder={placeholder} className="p-10 font-extrabold" />
         </div>
       </SelectTrigger>
-      <SelectContent className=" max-w-60">
+      <SelectContent className=" max-w-">
         {airports
           .filter((airport) => airport.city !== excludeCity)
           .map((airport) => (
@@ -86,7 +86,7 @@ export function CitySelect({
                 <span className="font-bold">
                   {airport.city}, {airport.country}
                 </span>
-                <span className="text-sm text-muted-foreground max-w-48 truncate">
+                <span className="text-sm text-muted-foreground  truncate">
                   {airport.code}, {airport.name}
                 </span>
               </div>

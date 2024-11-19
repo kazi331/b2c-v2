@@ -145,11 +145,11 @@ export function FlightBooking() {
               <ArrowLeftRight className="h-4 w-4" />
             </Button>
           </div>
-
+           
           {tripType === "roundTrip" ? (
             <DatePickerWithRange
-              dateRange={dateRange}
-              setDateRange={setDateRange}
+            dateRange={dateRange}
+            setDateRange={setDateRange}
             />
           ) : (
             <DatePicker
@@ -157,9 +157,10 @@ export function FlightBooking() {
               onChange={(date) => setDepartureDate(date as Date)}
               label="Departure Date"
               minDate={today}
-            />
-          )}
+              />
+            )}
         </div>
+           
       ) : (
         <MultiCityTrip
           flights={multiCityFlights}

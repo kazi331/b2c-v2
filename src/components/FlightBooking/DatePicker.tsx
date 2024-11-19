@@ -34,7 +34,7 @@ export function DatePicker({
           {date ? (
             <div className="flex flex-col items-start">
               <span className="text-sm text-muted-foreground uppercase">
-                Return Date
+                Journey Date
               </span>
               <div className="flex items-center gap-2">
                 <span className="font-bold text-xl text-slate-500">

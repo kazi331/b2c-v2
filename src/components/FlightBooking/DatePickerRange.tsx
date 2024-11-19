@@ -25,7 +25,7 @@ export function DatePickerWithRange({
   return (
     <div className="grid grid-cols-4 gap-2 w-full">
       <Popover>
-        <PopoverTrigger asChild className="col-span-2 bg-gray-100">
+        <PopoverTrigger asChild className="col-span-2 bg-gray-100 border-none">
           <Button
             id="departure-date"
             variant={"outline"}
@@ -40,7 +40,7 @@ export function DatePickerWithRange({
                   Return Date
                 </span>
                 <div className="flex items-center gap-2">
-                  <span className="font-bold text-xl text-slate-500">
+                  <span className="font-bold text-xl text-slate-600">
                     {format(dateRange.from, "d")}
                   </span>
                   <span className="text-sm text-muted-foreground">
@@ -72,7 +72,7 @@ export function DatePickerWithRange({
         </PopoverContent>
       </Popover>
       <Popover>
-        <PopoverTrigger asChild className="col-span-2 bg-gray-100">
+        <PopoverTrigger asChild className="col-span-2 bg-gray-100 border-none">
           <Button
             id="arrival-date"
             variant={"outline"}
@@ -87,7 +87,7 @@ export function DatePickerWithRange({
                   Return Date
                 </span>
                 <div className="flex items-center gap-2">
-                  <span className="font-bold text-xl text-slate-500">
+                  <span className="font-bold text-xl text-slate-600">
                     {format(dateRange.to, "d")}
                   </span>
                   <span className="text-sm text-muted-foreground">
