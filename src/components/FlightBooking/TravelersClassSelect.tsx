@@ -5,7 +5,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { Users } from "lucide-react";
+import { cn } from "@/lib/utils";
 import { useState } from "react";
 
 interface Travelers {
@@ -19,6 +19,7 @@ interface TravelersClassSelectProps {
   onTravelersChange: (travelers: Travelers) => void;
   cabinClass: string;
   onCabinClassChange: (value: string) => void;
+  className?: string;
 }
 
 export function TravelersClassSelect({
@@ -26,6 +27,7 @@ export function TravelersClassSelect({
   onTravelersChange,
   cabinClass,
   onCabinClassChange,
+  className,
 }: TravelersClassSelectProps) {
   const [open, setOpen] = useState(false);
 
@@ -42,102 +44,122 @@ export function TravelersClassSelect({
     travelers.adults + travelers.children + travelers.infants;
 
   return (
-    <Popover open={open} onOpenChange={setOpen}>
-      <PopoverTrigger asChild>
-        <Button
-          variant="outline"
-          role="combobox"
-          aria-expanded={open}
-          className="w-full justify-between"
-        >
-          <div className="flex items-center">
-            <Users className="mr-2 h-4 w-4" />
-            <span>
-              {totalTravelers} Traveler{totalTravelers !== 1 ? "s" : ""},{" "}
-              {cabinClass}
-            </span>
-          </div>
-        </Button>
-      </PopoverTrigger>
-      <PopoverContent className="w-80 p-4" align="start">
-        <div className="space-y-4">
-          <div className="space-y-2">
-            <h4 className="font-medium leading-none">Travelers</h4>
-            <TravelerCounter
-              label="Adults"
-              sublabel="12 years and above"
-              value={travelers.adults}
-              onChange={(value) => updateTravelers("adults", value)}
-              min={1}
-              max={9}
-            />
-            <TravelerCounter
-              label="Children"
-              sublabel="2-11 years"
-              value={travelers.children}
-              onChange={(value) => updateTravelers("children", value)}
-              min={0}
-              max={4}
-            />
-            <TravelerCounter
-              label="Infant"
-              sublabel="Below 2 years"
-              value={travelers.infants}
-              onChange={(value) => updateTravelers("infants", value)}
-              min={0}
-              max={4}
-            />
-          </div>
+    <div className={cn("relative gap-2 w-full", className)}>
+      <Popover open={open} onOpenChange={setOpen}>
+        <PopoverTrigger asChild className="bg-gray-100 h-24 w-full">
+          <Button
+            variant="outline"
+            role="combobox"
+            aria-expanded={open}
+            className="bg-brand text-white hover:bg-brand hover:text-white px-4"
+          >
+            <div className="flex flex-col items-center ">
+              <span className="text-lg">
+                Passenger{totalTravelers !== 1 ? "s" : ""}
+              </span>
+              <span className="font-bold text-xl">
+                {totalTravelers} Person{totalTravelers !== 1 ? "s" : ""}
+              </span>
+              <span className="text-lg">{cabinClass}</span>
+            </div>
+          </Button>
+        </PopoverTrigger>
+        <PopoverContent className="w-80 p-4" align="start">
+          <div className="space-y-4">
+            <div className="space-y-2">
+              <h4 className="font-medium leading-none">Travelers</h4>
+              <TravelerCounter
+                label="Adults"
+                sublabel="12 years and above"
+                value={travelers.adults}
+                onChange={(value) => updateTravelers("adults", value)}
+                min={1}
+                max={9}
+              />
+              <TravelerCounter
+                label="Children"
+                sublabel="2-11 years"
+                value={travelers.children}
+                onChange={(value) => updateTravelers("children", value)}
+                min={0}
+                max={4}
+              />
+              <TravelerCounter
+                label="Infant"
+                sublabel="Below 2 years"
+                value={travelers.infants}
+                onChange={(value) => updateTravelers("infants", value)}
+                min={0}
+                max={4}
+              />
+            </div>
 
-          <div className="space-y-2">
-            <h4 className="font-medium leading-none">Class</h4>
-            <div className="grid grid-cols-2 gap-2">
+            <div className="space-y-2">
+              <h4 className="font-medium leading-none">Class</h4>
               <div className="flex items-center space-x-2">
-                <input
-                  type="radio"
-                  id="economy"
-                  name="cabinClass"
-                  value="Economy"
-                  checked={cabinClass === "Economy"}
-                  onChange={() => onCabinClassChange("Economy")}
-                  className="h-4 w-4 text-brand border-gray-300 focus:ring-brand "
-                />
                 <Label
                   htmlFor="economy"
-                  className="p-2 transition-colors duration-200 text-gray-700 cursor-pointer"
+                  className={`flex items-center justify-center gap-2 cursor-pointer rounded p-2 font-bold transition-colors duration-200 ${
+                    cabinClass === "Economy" ? "text-gray-800" : "text-gray-600"
+                  }`}
                 >
-                  Economy
+                  <input
+                    type="radio"
+                    id="economy"
+                    name="cabinClass"
+                    value="Economy"
+                    checked={cabinClass === "Economy"}
+                    onChange={(e) => onCabinClassChange(e.target.value)}
+                    className="hidden"
+                  />
+                  <span
+                    className={`size-4 rounded-full border-4 ${
+                      cabinClass === "Economy"
+                        ? "border-brand"
+                        : "border-gray-300"
+                    }`}
+                  ></span>
+                  One Way
                 </Label>
-              </div>
-              <div className="flex items-center space-x-2">
-                <input
-                  type="radio"
-                  id="business"
-                  name="cabinClass"
-                  value="Business"
-                  checked={cabinClass === "Business"}
-                  onChange={() => onCabinClassChange("Business")}
-                  className="h-4 w-4 text-brand border-gray-300 focus:ring-brand"
-                />
                 <Label
                   htmlFor="business"
-                  className="p-2 transition-colors duration-200 text-gray-700 cursor-pointer"
+                  className={`flex items-center justify-center gap-2 cursor-pointer rounded p-2 font-bold transition-colors duration-200 ${
+                    cabinClass === "Business"
+                      ? "text-gray-800"
+                      : "text-gray-600"
+                  }`}
                 >
+                  <input
+                    type="radio"
+                    id="business"
+                    name="cabinClass"
+                    value="Business"
+                    checked={cabinClass === "Business"}
+                    onChange={(e) => onCabinClassChange(e.target.value)}
+                    className="hidden"
+                  />
+                  <span
+                    className={`size-4 rounded-full border-4 ${
+                      cabinClass === "Business"
+                        ? "border-brand"
+                        : "border-gray-300"
+                    }`}
+                  ></span>
                   Business
                 </Label>
               </div>
             </div>
-          </div>
 
-          <Button
-            className="w-full bg-brand text-white hover:bg-brand hover:text-white"
-            onClick={() => setOpen(false)}
-          >
-            Done
-          </Button>
-        </div>
-      </PopoverContent>
-    </Popover>
+            <Button
+              className="w-full bg-brand text-white hover:bg-brand hover:text-white"
+              onClick={() => setOpen(false)}
+            >
+              Done
+            </Button>
+          </div>
+        </PopoverContent>
+      </Popover>
+    </div>
   );
 }
 

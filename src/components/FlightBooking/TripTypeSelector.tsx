@@ -10,7 +10,7 @@ export function TripTypeSelector({ value, onChange }: TripTypeSelectorProps) {
     <div className="flex space-x-2 mb-6">
       <Label
         htmlFor="oneWay"
-        className={`flex items-center justify-center gap-2 cursor-pointer rounded p-2 font-bold transition-colors duration-200 ${value === "oneWay" ? "text-gray-800" : "text-gray-400"}`}
+        className={`flex items-center justify-center gap-2 cursor-pointer rounded p-2 font-bold transition-colors duration-200 ${value === "oneWay" ? "text-gray-800" : "text-gray-600"}`}
       >
         <input
           type="radio"
@@ -27,7 +27,7 @@ export function TripTypeSelector({ value, onChange }: TripTypeSelectorProps) {
 
       <Label
         htmlFor="roundTrip"
-        className={`flex items-center justify-center gap-2 cursor-pointer rounded p-2 font-bold transition-colors duration-200 ${value === "roundTrip" ? "text-gray-800" : "text-gray-400"}`}
+        className={`flex items-center justify-center gap-2 cursor-pointer rounded p-2 font-bold transition-colors duration-200 ${value === "roundTrip" ? "text-gray-800" : "text-gray-600"}`}
       >
         <input
           type="radio"
@@ -44,7 +44,7 @@ export function TripTypeSelector({ value, onChange }: TripTypeSelectorProps) {
 
       <Label
         htmlFor="multiCity"
-        className={`flex items-center justify-center gap-2 cursor-pointer rounded p-2 font-bold transition-colors duration-200 ${value === "multiCity" ? "text-gray-800" : "text-gray-400"}`}
+        className={`flex items-center justify-center gap-2 cursor-pointer rounded p-2 font-bold transition-colors duration-200 ${value === "multiCity" ? "text-gray-800" : "text-gray-600"}`}
       >
         <input
           type="radio"

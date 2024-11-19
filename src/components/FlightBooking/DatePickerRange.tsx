@@ -16,16 +16,26 @@ import { cn } from "@/lib/utils";
 export function DatePickerWithRange({
   dateRange,
   setDateRange,
+  className,
 }: React.HTMLAttributes<HTMLDivElement> & {
   dateRange: DateRange;
   setDateRange: (date: DateRange) => void;
+  className?: string;
 }) {
   const today = new Date();
 
   return (
-    <div className="grid grid-cols-4 gap-2 w-full">
+    <div
+      className={cn(
+        "grid grid-cols-4 w-full rounded-lg overflow-hidden",
+        className
+      )}
+    >
       <Popover>
-        <PopoverTrigger asChild className="col-span-2 bg-gray-100 border-none">
+        <PopoverTrigger
+          asChild
+          className="col-span-2 bg-gray-100 border-none rounded-none"
+        >
           <Button
             id="departure-date"
             variant={"outline"}
@@ -37,7 +47,7 @@ export function DatePickerWithRange({
             {dateRange?.from ? (
               <div className="flex flex-col items-start">
                 <span className="text-sm text-muted-foreground uppercase">
-                  Return Date
+                  Journey Date
                 </span>
                 <div className="flex items-center gap-2">
                   <span className="font-bold text-xl text-slate-600">
@@ -72,7 +82,10 @@ export function DatePickerWithRange({
         </PopoverContent>
       </Popover>
       <Popover>
-        <PopoverTrigger asChild className="col-span-2 bg-gray-100 border-none">
+        <PopoverTrigger
+          asChild
+          className="col-span-2 bg-gray-100 border-none rounded-none ring-1 ring-gray-200"
+        >
           <Button
             id="arrival-date"
             variant={"outline"}

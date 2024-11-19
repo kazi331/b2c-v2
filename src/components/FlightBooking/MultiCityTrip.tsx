@@ -45,7 +45,6 @@ export function MultiCityTrip({
               excludeCity={flight.origin}
               label="Destination"
             />
-
             <DatePicker
               date={flight.date}
               onChange={(date) => onFlightChange(index, { ...flight, date })}
