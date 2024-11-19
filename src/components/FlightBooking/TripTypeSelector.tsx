@@ -1,6 +1,6 @@
 import { Label } from "@/components/ui/label";
 
-type TripType = "oneWay" | "roundTrip" | "multiCity";
+export type TripType = "oneWay" | "roundTrip" | "multiCity";
 
 interface TripTypeSelectorProps {
   value: TripType;

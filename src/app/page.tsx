@@ -7,7 +7,7 @@ import {
 
 import FlightSearch from "@/components/FlightBooking/FlightSearch";
 import FlightSearchFilter from "@/components/FlightBooking/FlightSearchFilter";
-import { TripTypeSelector } from "@/components/FlightBooking/TripTypeSelector";
+import { TripType, TripTypeSelector } from "@/components/FlightBooking/TripTypeSelector";
 import { Button } from "@/components/ui/button";
 import { Building2, Send } from "lucide-react";
 import Image from "next/image";
@@ -15,7 +15,7 @@ import { useState } from "react";
 
 export default function Page() {
   const [activeTab, setActiveTab] = useState("flight");
-  const [tripType, setTripType] = useState("roundTrip");
+  const [tripType, setTripType] = useState<TripType>("roundTrip");
   return (
     <div className="min-h-screen bg-gray-100 pt-20">
       <div className="max-w-6xl mx-auto bg-white p-4 pb-10 pt-14 rounded-lg shadow relative">
