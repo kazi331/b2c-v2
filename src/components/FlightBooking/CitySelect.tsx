@@ -63,20 +63,19 @@ export function CitySelect({
   className,
   label,
 }: CitySelectProps) {
+  console.log(value)
   return (
     <Select value={value} onValueChange={onChange}>
       <SelectTrigger
         className={cn(
-          "w-full h-14 max-w-60 bg-gray-100 focus:ring-0 relative rounded-tl-none",
+          "w-full h-18 max-w-60 bg-gray-100 focus:ring-0 relative rounded-tl-none truncate",
           className
         )}
       >
-        <SelectValue placeholder={placeholder} className="p-10" />
-        {label && (
-          <p className="absolute bottom-full left-0 ring-1 ring-gray-200 bg-gray-100 px-2 rounded-t text-muted-foreground">
-            {label}
-          </p>
-        )}
+        <div className="flex flex-col">
+          <span className="text-sm text-muted-foreground uppercase text-left">{label}</span>
+          <SelectValue placeholder={placeholder} className="p-10 font-extrabold" />
+        </div>
       </SelectTrigger>
       <SelectContent className=" max-w-60">
         {airports
@@ -87,7 +86,7 @@ export function CitySelect({
                 <span className="font-bold">
                   {airport.city}, {airport.country}
                 </span>
-                <span className="text-sm text-muted-foreground max-w-52 truncate">
+                <span className="text-sm text-muted-foreground max-w-48 truncate">
                   {airport.code}, {airport.name}
                 </span>
               </div>

@@ -10,7 +10,7 @@ export function TripTypeSelector({ value, onChange }: TripTypeSelectorProps) {
     <div className="flex space-x-2 mb-6">
       <Label
         htmlFor="oneWay"
-        className={`flex items-center justify-center gap-2 cursor-pointer rounded py-2 px-4 transition-colors duration-200 ${value === "oneWay" ? "bg-brand text-white" : "bg-gray-100 text-gray-500 hover:bg-gray-200"}`}
+        className={`flex items-center justify-center gap-2 cursor-pointer rounded p-2 font-bold transition-colors duration-200 ${value === "oneWay" ? "text-gray-800" : "text-gray-400"}`}
       >
         <input
           type="radio"
@@ -21,13 +21,13 @@ export function TripTypeSelector({ value, onChange }: TripTypeSelectorProps) {
           onChange={(e) => onChange(e.target.value)}
           className="hidden"
         />
-        <span className={`size-4 rounded-full border-2 ${value === "oneWay" ? "border-white" : "border-gray-300"}`}></span>
+        <span className={`size-4 rounded-full border-4 ${value === "oneWay" ? "border-brand" : "border-gray-300"}`}></span>
         One Way
       </Label>
 
       <Label
         htmlFor="roundTrip"
-        className={`flex items-center justify-center gap-2 cursor-pointer rounded py-2 px-4 transition-colors duration-200 ${value === "roundTrip" ? "bg-brand text-white" : "bg-gray-100 text-gray-500 hover:bg-gray-200"}`}
+        className={`flex items-center justify-center gap-2 cursor-pointer rounded p-2 font-bold transition-colors duration-200 ${value === "roundTrip" ? "text-gray-800" : "text-gray-400"}`}
       >
         <input
           type="radio"
@@ -38,13 +38,13 @@ export function TripTypeSelector({ value, onChange }: TripTypeSelectorProps) {
           onChange={(e) => onChange(e.target.value)}
           className="hidden"
         />
-        <span className={`size-4 rounded-full border-2 ${value === "roundTrip" ? "border-white" : "border-gray-300"}`}></span>
+        <span className={`size-4 rounded-full border-4 ${value === "roundTrip" ? "border-brand" : "border-gray-300"}`}></span>
         Round Trip
       </Label>
 
       <Label
         htmlFor="multiCity"
-        className={`flex items-center justify-center gap-2 cursor-pointer rounded py-2 px-4 transition-colors duration-200 ${value === "multiCity" ? "bg-brand text-white" : "bg-gray-100 text-gray-500 hover:bg-gray-200"}`}
+        className={`flex items-center justify-center gap-2 cursor-pointer rounded p-2 font-bold transition-colors duration-200 ${value === "multiCity" ? "text-gray-800" : "text-gray-400"}`}
       >
         <input
           type="radio"
@@ -55,7 +55,7 @@ export function TripTypeSelector({ value, onChange }: TripTypeSelectorProps) {
           onChange={(e) => onChange(e.target.value)}
           className="hidden"
         />
-        <span className={`size-4 rounded-full border-2 ${value === "multiCity" ? "border-white" : "border-gray-300"}`}></span>
+        <span className={`size-4 rounded-full border-4 ${value === "multiCity" ? "border-brand" : "border-gray-300"}`}></span>
         Multi City
       </Label>
     </div>

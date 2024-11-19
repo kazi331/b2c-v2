@@ -1,7 +1,6 @@
 "use client";
 
 import { format } from "date-fns";
-import { CalendarIcon } from "lucide-react";
 import * as React from "react";
 import { DateRange } from "react-day-picker";
 
@@ -31,13 +30,27 @@ export function DatePickerWithRange({
             id="departure-date"
             variant={"outline"}
             className={cn(
-              "w-full justify-start text-left font-normal h-14",
+              "w-full justify-start text-left font-normal h-18",
               !dateRange?.from && "text-muted-foreground"
             )}
           >
-            <CalendarIcon />
             {dateRange?.from ? (
-              format(dateRange.from, "LLL dd, y")
+              <div className="flex flex-col items-start">
+                <span className="text-sm text-muted-foreground uppercase">
+                  Return Date
+                </span>
+                <div className="flex items-center gap-2">
+                  <span className="font-bold text-xl text-slate-500">
+                    {format(dateRange.from, "d")}
+                  </span>
+                  <span className="text-sm text-muted-foreground">
+                    {format(dateRange.from, "MMM yy")}
+                  </span>
+                </div>
+                <div className="text-sm text-muted-foreground">
+                  {format(dateRange.from, "EEEE")}
+                </div>
+              </div>
             ) : (
               <span>Pick a departure date</span>
             )}
@@ -64,13 +77,27 @@ export function DatePickerWithRange({
             id="arrival-date"
             variant={"outline"}
             className={cn(
-              "w-full justify-start text-left font-normal h-14",
+              "w-full justify-start text-left font-normal h-18",
               !dateRange?.to && "text-muted-foreground"
             )}
           >
-            <CalendarIcon />
             {dateRange?.to ? (
-              format(dateRange.to, "LLL dd, y")
+              <div className="flex flex-col items-start">
+                <span className="text-sm text-muted-foreground uppercase">
+                  Return Date
+                </span>
+                <div className="flex items-center gap-2">
+                  <span className="font-bold text-xl text-slate-500">
+                    {format(dateRange.to, "d")}
+                  </span>
+                  <span className="text-sm text-muted-foreground">
+                    {format(dateRange.to, "MMM yy")}
+                  </span>
+                </div>
+                <div className="text-sm text-muted-foreground">
+                  {format(dateRange.to, "EEEE")}
+                </div>
+              </div>
             ) : (
               <span>Pick an arrival date</span>
             )}
