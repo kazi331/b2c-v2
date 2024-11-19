@@ -63,7 +63,6 @@ export function CitySelect({
   className,
   label,
 }: CitySelectProps) {
-  console.log(value)
   return (
     <Select value={value} onValueChange={onChange}>
       <SelectTrigger

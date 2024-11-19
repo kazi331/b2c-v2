@@ -3,12 +3,13 @@
 import { CitySelect } from "@/components/FlightBooking/CitySelect";
 import { DatePicker } from "@/components/FlightBooking/DatePicker";
 import { DatePickerWithRange } from "@/components/FlightBooking/DatePickerRange";
-import { MultiCityTrip } from "@/components/FlightBooking/MultiCityTrip";
 import { Button } from "@/components/ui/button";
 import { addDays } from "date-fns";
-import { ArrowLeftRight, Search } from "lucide-react";
+import { Plus } from "lucide-react";
 import { useState } from "react";
 import { DateRange } from "react-day-picker";
+import SearchBtn from "./SearchBtn";
+import SwapBtn from "./SwapBtn";
 import { TravelersClassSelect } from "./TravelersClassSelect";
 
 interface Flight {
@@ -53,6 +54,15 @@ export default function FlightSearch({ tripType }: { tripType: string }) {
     setOrigin(destination);
     setDestination(origin);
   };
+  const handleMulticitySwapCities = (index: number) => {
+    const newFlights = [...multiCityFlights];
+    newFlights[index] = {
+      ...newFlights[index],
+      origin: newFlights[index].destination,
+      destination: newFlights[index].origin,
+    };
+    setMultiCityFlights(newFlights);
+  };
 
   const handleMultiCityFlightChange = (index: number, flight: Flight) => {
     const newFlights = [...multiCityFlights];
@@ -63,12 +73,14 @@ export default function FlightSearch({ tripType }: { tripType: string }) {
   const handleAddFlight = () => {
     if (multiCityFlights.length < 5) {
       const lastFlight = multiCityFlights[multiCityFlights.length - 1];
-      const newDate = lastFlight.date ? addDays(lastFlight.date, 1) : tomorrow;
+      const newDate = lastFlight?.date
+        ? addDays(lastFlight?.date, 1)
+        : tomorrow;
 
       setMultiCityFlights([
         ...multiCityFlights,
         {
-          origin: lastFlight.destination || "",
+          origin: lastFlight?.destination || "",
           destination: "",
           date: newDate,
         },
@@ -101,76 +113,137 @@ export default function FlightSearch({ tripType }: { tripType: string }) {
 
   return (
     <div className="space-y-4 bg-white">
-      {tripType !== "multiCity" ? (
-        <div className="grid gap-4 grid-cols-12">
-          {/* city select section */}
-          <div className="relative gap-2 col-span-5">
-            <div className="grid grid-flow-col grid-cols-2 gap-2 w-full">
-              <CitySelect
-                value={origin}
-                onChange={setOrigin}
-                placeholder="From"
-                excludeCity={destination}
-                label="From"
-              />
-              <CitySelect
-                value={destination}
-                onChange={setDestination}
-                placeholder="To"
-                excludeCity={origin}
-                label="To"
-              />
-            </div>
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={handleSwapCities}
-              className="flex items-center bg-brand text-white hover:bg-brand hover:text-white rounded-full border-4 border-white justify-center absolute left-1/2 top-1/2 -translate-y-1/2 -translate-x-1/2"
-            >
-              <ArrowLeftRight className="h-4 w-4" />
-            </Button>
+      <div className="grid gap-4 grid-cols-12">
+        {/* city select section */}
+        <div className="relative gap-2 col-span-5">
+          <div className="grid grid-flow-col grid-cols-2 gap-2 w-full">
+            <CitySelect
+              value={origin}
+              onChange={setOrigin}
+              placeholder="From"
+              excludeCity={destination}
+              label="From"
+            />
+            <CitySelect
+              value={destination}
+              onChange={setDestination}
+              placeholder="To"
+              excludeCity={origin}
+              label="To"
+            />
           </div>
-
-          {/* date picker section */}
-          {tripType === "roundTrip" ? (
-            <DatePickerWithRange
-              className="col-span-4"
-              dateRange={dateRange}
-              setDateRange={setDateRange}
-            />
-          ) : (
-            <DatePicker
-              className="col-span-4"
-              date={departureDate}
-              onChange={(date) => setDepartureDate(date as Date)}
-              label="Departure Date"
-              minDate={today}
-            />
-          )}
-          <TravelersClassSelect
-            className="col-span-3"
-            travelers={travelers}
-            onTravelersChange={setTravelers}
-            cabinClass={cabinClass}
-            onCabinClassChange={setCabinClass}
-          />
+          <SwapBtn handleSwapCities={handleSwapCities} />
         </div>
-      ) : (
-        <MultiCityTrip
-          flights={multiCityFlights}
-          onFlightChange={handleMultiCityFlightChange}
-          onAddFlight={handleAddFlight}
-          onRemoveFlight={handleRemoveFlight}
-        />
-      )}
 
-      <Button
-        onClick={handleSearch}
-        className="bg-brand text-white hover:bg-brand hover:text-white absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 font-bold text-xl py-5"
-      >
-        <Search className="mr-1 h-4 w-4" />
-        Search Flight
-      </Button>
+        {/* date picker section */}
+        {tripType === "roundTrip" ? (
+          <DatePickerWithRange
+            className="col-span-4"
+            dateRange={dateRange}
+            setDateRange={setDateRange}
+          />
+        ) : (
+          <DatePicker
+            className="col-span-4"
+            date={departureDate}
+            onChange={(date) => setDepartureDate(date as Date)}
+            label="Departure Date"
+            minDate={today}
+          />
+        )}
+        <TravelersClassSelect
+          className="col-span-3"
+          travelers={travelers}
+          onTravelersChange={setTravelers}
+          cabinClass={cabinClass}
+          onCabinClassChange={setCabinClass}
+        />
+      </div>
+
+      {/* multi city trip section */}
+
+      {tripType === "multiCity" && (
+        <>
+          {multiCityFlights.map((flight, index) => (
+            <div key={index} className="grid gap-4 grid-cols-12">
+              <div className="relative gap-2 col-span-5">
+                <div className="grid grid-flow-col grid-cols-2 gap-2 w-full">
+                  <CitySelect
+                    value={flight.origin}
+                    onChange={(value) =>
+                      handleMultiCityFlightChange(index, {
+                        ...flight,
+                        origin: value,
+                      })
+                    }
+                    placeholder="From"
+                    excludeCity={flight.destination}
+                    label="From"
+                  />
+                  <CitySelect
+                    value={flight.destination}
+                    onChange={(value) =>
+                      handleMultiCityFlightChange(index, {
+                        ...flight,
+                        destination: value,
+                      })
+                    }
+                    placeholder="To"
+                    excludeCity={flight.origin}
+                    label="To"
+                  />
+                </div>
+                <SwapBtn
+                  handleSwapCities={() => handleMulticitySwapCities(index)}
+                />
+              </div>
+              <DatePicker
+                className="col-span-4"
+                date={multiCityFlights[multiCityFlights.length - 1].date}
+                onChange={(date) =>
+                  handleMultiCityFlightChange(multiCityFlights.length - 1, {
+                    ...multiCityFlights[multiCityFlights.length - 1],
+                    date,
+                  })
+                }
+                label="Departure Date"
+                minDate={today}
+              />
+              <div className="col-span-3 flex items-center justify-center bg-brand text-white rounded-lg">
+                <Button
+                  variant="ghost"
+                  onClick={() => handleRemoveFlight(index)}
+                  className="ml-2 hover:bg-transparent hover:text-white h-full w-full text-3xl "
+                >
+                  &minus;
+                </Button>
+                <Button
+                  variant="ghost"
+                  onClick={() => handleAddFlight()}
+                  className="ml-2 hover:bg-transparent hover:text-white h-full w-full text-3xl"
+                >
+                  +
+                </Button>
+              </div>
+            </div>
+          ))}
+        </>
+      )}
+      {/* add flight button */}
+      {tripType === "multiCity" &&
+        multiCityFlights.length < 5 &&
+        multiCityFlights.length < 1 && (
+          <Button
+            variant="outline"
+            onClick={handleAddFlight}
+            className="ml-auto"
+          >
+            <Plus className="mr-2 h-4 w-4" />
+            Add another flight
+          </Button>
+        )}
+      {/* search button */}
+      <SearchBtn handleSearch={handleSearch} label="Flight" />
     </div>
   );
 }
