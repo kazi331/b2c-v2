@@ -1,63 +1,49 @@
 import { Label } from "@/components/ui/label";
 
+type TripType = "oneWay" | "roundTrip" | "multiCity";
+
 interface TripTypeSelectorProps {
-  value: string;
-  onChange: (value: string) => void;
+  value: TripType;
+  onChange: (value: TripType) => void;
 }
+
+const TripTypeOption = ({ id, value, checked, onChange, label }: { 
+  id: TripType; 
+  value: TripType; 
+  checked: boolean; 
+  onChange: (value: TripType) => void; 
+  label: string; 
+}) => (
+  <Label
+    htmlFor={id}
+    className={`flex items-center justify-center gap-2 cursor-pointer rounded p-2 font-bold transition-colors duration-200 ${
+      checked ? "text-gray-800" : "text-gray-600"
+    }`}
+  >
+    <input
+      type="radio"
+      id={id}
+      name="tripType"
+      value={value}
+      checked={checked}
+      onChange={() => onChange(value)}
+      className="hidden"
+    />
+    <span
+      className={`size-4 rounded-full border-[0.35rem] ${
+        checked ? "border-brand" : "border-gray-300"
+      }`}
+    ></span>
+    {label}
+  </Label>
+);
 
 export function TripTypeSelector({ value, onChange }: TripTypeSelectorProps) {
   return (
     <div className="flex space-x-2 mb-6">
-      <Label
-        htmlFor="oneWay"
-        className={`flex items-center justify-center gap-2 cursor-pointer rounded p-2 font-bold transition-colors duration-200 ${value === "oneWay" ? "text-gray-800" : "text-gray-600"}`}
-      >
-        <input
-          type="radio"
-          id="oneWay"
-          name="tripType"
-          value="oneWay"
-          checked={value === "oneWay"}
-          onChange={(e) => onChange(e.target.value)}
-          className="hidden"
-        />
-        <span className={`size-4 rounded-full border-4 ${value === "oneWay" ? "border-brand" : "border-gray-300"}`}></span>
-        One Way
-      </Label>
-
-      <Label
-        htmlFor="roundTrip"
-        className={`flex items-center justify-center gap-2 cursor-pointer rounded p-2 font-bold transition-colors duration-200 ${value === "roundTrip" ? "text-gray-800" : "text-gray-600"}`}
-      >
-        <input
-          type="radio"
-          id="roundTrip"
-          name="tripType"
-          value="roundTrip"
-          checked={value === "roundTrip"}
-          onChange={(e) => onChange(e.target.value)}
-          className="hidden"
-        />
-        <span className={`size-4 rounded-full border-4 ${value === "roundTrip" ? "border-brand" : "border-gray-300"}`}></span>
-        Round Trip
-      </Label>
-
-      <Label
-        htmlFor="multiCity"
-        className={`flex items-center justify-center gap-2 cursor-pointer rounded p-2 font-bold transition-colors duration-200 ${value === "multiCity" ? "text-gray-800" : "text-gray-600"}`}
-      >
-        <input
-          type="radio"
-          id="multiCity"
-          name="tripType"
-          value="multiCity"
-          checked={value === "multiCity"}
-          onChange={(e) => onChange(e.target.value)}
-          className="hidden"
-        />
-        <span className={`size-4 rounded-full border-4 ${value === "multiCity" ? "border-brand" : "border-gray-300"}`}></span>
-        Multi City
-      </Label>
+      <TripTypeOption id="oneWay" value="oneWay" checked={value === "oneWay"} onChange={onChange} label="One Way" />
+      <TripTypeOption id="roundTrip" value="roundTrip" checked={value === "roundTrip"} onChange={onChange} label="Round Trip" />
+      <TripTypeOption id="multiCity" value="multiCity" checked={value === "multiCity"} onChange={onChange} label="Multi City" />
     </div>
   );
 }

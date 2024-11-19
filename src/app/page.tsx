@@ -1,11 +1,17 @@
 "use client";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 
-import { useState } from "react";
-// import { FlightBooking } from "@/components/FlightBooking/FlightBooking"
 import FlightSearch from "@/components/FlightBooking/FlightSearch";
+import FlightSearchFilter from "@/components/FlightBooking/FlightSearchFilter";
 import { TripTypeSelector } from "@/components/FlightBooking/TripTypeSelector";
 import { Button } from "@/components/ui/button";
 import { Building2, Send } from "lucide-react";
+import Image from "next/image";
+import { useState } from "react";
 
 export default function Page() {
   const [activeTab, setActiveTab] = useState("flight");
@@ -17,7 +23,7 @@ export default function Page() {
           {/* tab selector */}
           <div className="flex items-center gap-1 ">
             <Button
-              variant="ghost"
+              variant="outline"
               className={`text-xl py-6 px-4 ${
                 activeTab === "flight" &&
                 "bg-brand text-white hover:bg-brand hover:text-white"
@@ -27,7 +33,7 @@ export default function Page() {
               <Send className="size-4" /> Flight
             </Button>
             <Button
-              variant="ghost"
+              variant="outline"
               className={`text-xl py-6 px-4 ${
                 activeTab === "hotel" &&
                 "bg-brand text-white hover:bg-brand hover:text-white"
@@ -36,13 +42,31 @@ export default function Page() {
             >
               <Building2 className="size-4" /> Hotel
             </Button>
+            {/* filter button */}
+            {activeTab === "flight" && (
+              <Popover>
+                <PopoverTrigger asChild>
+                  <button className="text-xl p-2 rounded-lg border-brand border">
+                  <Image
+                    src="/assets/images/fliter-flight.svg"
+                    alt="filter"
+                    width={30}
+                    height={30}
+                  />
+                </button>
+              </PopoverTrigger>
+              <PopoverContent side="right" align="end">
+                <FlightSearchFilter />
+                </PopoverContent>
+              </Popover>
+            )}
           </div>
           {/* trip type selector */}
           {activeTab === "flight" && (
             <TripTypeSelector value={tripType} onChange={setTripType} />
           )}
         </div>
-          {/* flight search */}
+        {/* flight search */}
         {activeTab === "flight" && <FlightSearch tripType={tripType} />}
       </div>
     </div>

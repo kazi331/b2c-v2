@@ -113,7 +113,7 @@ export function TravelersClassSelect({
                     className="hidden"
                   />
                   <span
-                    className={`size-4 rounded-full border-4 ${
+                    className={`size-4 rounded-full border-[5px] ${
                       cabinClass === "Economy"
                         ? "border-brand"
                         : "border-gray-300"
@@ -139,7 +139,7 @@ export function TravelersClassSelect({
                     className="hidden"
                   />
                   <span
-                    className={`size-4 rounded-full border-4 ${
+                    className={`size-4 rounded-full border-[5px] ${
                       cabinClass === "Business"
                         ? "border-brand"
                         : "border-gray-300"
