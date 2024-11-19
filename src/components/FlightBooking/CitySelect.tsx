@@ -67,7 +67,7 @@ export function CitySelect({
     <Select value={value} onValueChange={onChange}>
       <SelectTrigger
         className={cn(
-          "w-full h-24 max-w- bg-gray-100 focus:ring-0 relative truncate border-none",
+          "w-full h-24 max-w- bg-gray-100 focus:ring-0 relative truncate border-none pl-4",
           className
         )}
       >
